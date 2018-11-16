@@ -33,8 +33,14 @@ bq ls $dataset_id
 
 
 echo "[ INFO ] Create a Ingestion-Time Partitioned Table called table_id_ingestion_partitioned"
+echo "[ INFO ] This table is partitioned based on ingestion (load) time by day"
 bq query --location=US --destination_table $dataset_id.table_id_ingestion_partitioned --time_partitioning_type=DAY --use_legacy_sql=false 'SELECT name,number FROM `bigquery-public-data.usa_names.usa_1910_current` WHERE gender = "M" ORDER BY number DESC'
 
+
+echo "[ INFO ] Create a Partitioned Table called table_id_partitioned"
+echo "[ INFO ] This table is partitioned based on the  on ingestion (load) time by day"
+bq query --location=US --destination_table $dataset_id.table_id_partitioned --nouse_legacy_sql 'SELECT TIMESTAMP("2018-02-01") as TS, 2 as a'
+ 
 
 echo "[ INFO ] List all BigQuery tables within $dataset_id"
 bq ls $dataset_id
@@ -50,7 +56,6 @@ bq show "$project_id:$dataset_id.$table_id"
 
 echo "[ INFO ] Run BigQuery query"
 bq query "SELECT count(*) as count FROM $project_id:$dataset_id.$table_id"
-
 
 
 
