@@ -4,11 +4,14 @@
 #
 #   Google Cloud BigQuery
 #
-#
+#   https://cloud.google.com/bigquery/docs/
+#   https://googleapis.github.io/google-cloud-python/latest/bigquery/reference.html
 #
 ######################################################################################
 
 
+import sys
+import argparse
 from google.cloud import bigquery
 
 
@@ -255,6 +258,34 @@ def bq_create_view(view_dataset_id, view_id, query):
 
 
 
+def bq_delete_dataset(dataset_id):
+    '''
+        Deletes a Dataset (Deleting a dataset is permanent)
+        
+        USAGE:
+        bq_delete_dataset('ztest1')
+        
+        Required Permissions:
+        Must have OWNER access at the dataset level,
+        or you must be assigned a project-level IAM role that includes bigquery.datasets.delete permissions.
+        If the dataset contains tables, bigquery.tables.delete is also required.
+        The following predefined, project-level IAM roles include both bigquery.datasets.delete and bigquery.tables.delete permissions:
+            bigquery.dataOwner
+            bigquery.admin
+    
+    '''
+    try:
+        client = bigquery.Client()
+        dataset_ref = client.dataset(dataset_id)
+        client.delete_dataset(dataset_ref, delete_contents=True)  # Set delete_contents=True to delete Dataset Tables
+        print('Dataset {} has been deleted.'.format(dataset_id))
+    except Exception as e:
+        print('[ ERROR] {}'.format(e))
+
+
+
+
+
 ######################################################################################
 #
 #   Main
@@ -263,7 +294,6 @@ def bq_create_view(view_dataset_id, view_id, query):
 
 
 if __name__ == "__main__":
-
 
     # ARGS - Used for Testing
     '''
@@ -279,13 +309,15 @@ if __name__ == "__main__":
     
     # Arguments
     ap = argparse.ArgumentParser()
-    ap.add_argument("--youtube_url", required=True, help="YouTube URL")
-    ap.add_argument("--bucket_name", required=True, help="Google Cloud Storage bucket name")
-    ap.add_argument("--bq_dataset_id", required=True, help="Google BigQuery Dataset ID")
-    ap.add_argument("--bq_table_id", required=True, help="Google BigQuery Table ID")
+    ap.add_argument("--project_id", required=True, help="GCP Project ID")
+    ap.add_argument("--dataset_id", required=True, help="BigQuery Dataset ID")
+    ap.add_argument("--location",   required=True, help="BigQuery Dataset Geographic Location")
+    ap.add_argument("--table1_id",  required=True, help="BigQuery Table Name (empty table)")
+    ap.add_argument("--table2_id",  required=True, help="BigQuery Table Name (GCS loaded table)")
+    ap.add_argument("--gcs_path",   required=True, help="Google Cloud Storage location")
+    ap.add_argument("--view_id",    required=True, help="Name/ID of BigQuery View")
     args = vars(ap.parse_args())
-
-
+    
     # Create BigQuery Dataset
     bq_create_dataset(dataset_id=args['dataset_id'], location=args['location'])
     
@@ -341,21 +373,20 @@ if __name__ == "__main__":
         sys.exit()
     
     # Create View on Loan Table
-    bq_create_view( view_dataset_id = 'demo_dataset1',
-                        view_id = 'demo_view1',
+    bq_create_view( view_dataset_id = args['dataset_id'],
+                        view_id = args['view_id'],
                         query = " select member_id, loan_amnt, zip_code, `default` from `{}.{}.{}` ".format(args['project_id'], args['dataset_id'], args['table2_id'])
                       )
     
     # Pause for user input
-    input_resp = input('[ INFO ] A view has been created in BigQuery.\n[ INFO ] The next step will delete all datasets, tables, and views. Press y to continue or any other key to keep the assets:  ')
+    input_resp = input('[ INFO ] Demoflow is complete. Press y to DELETE all assets or any other key to keep the assets:  ')
     if input_resp == 'y':
         pass
     else:
         sys.exit()
     
     # Cleanup - Delete Dataset and Tables
-
-
+    bq_delete_dataset(args['dataset_id'])
 
 
 
