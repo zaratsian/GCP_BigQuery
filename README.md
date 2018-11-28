@@ -24,12 +24,12 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Primitive Roles: Owner, Editor, and Viewer
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Predefined Roles:
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.admin (full access)
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.dataOwner (Read, update, and delete the dataset. Read the dataset's metadata and to list tables in the dataset.)
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.dataEditor (Read dataset metadata, list tables in the dataset. Read the dataset's metadata and to list tables in the dataset.)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.dataOwner (Read, update, delete dataset. Read the dataset metadata and list tables in dataset)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.dataEditor (Read the dataset metadata and list tables in the dataset.)
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.metadataViewer
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.dataViewer
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.jobUser (Permissions to run jobs, queries within project)
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.user (Permissions to run jobs, including queries, within the project. Most individuals (data scientists/analysts))
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;roles/bigquery.user (Run jobs, queries, within the project. Most individuals, data scientists)
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;When applying access to a dataset, you can grant access to:
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;User by e-mail - Gives an individual Google account access to the dataset
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;Group by e-mail - Gives members of a Google group access to the dataset
@@ -55,8 +55,6 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;Creating a custom quota on query data allows you to control costs at the project-level or at the user-level
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;Project-level custom quotas limit the aggregate usage of all users in that project.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;User-level custom quotas are separately applied to each user or service account within a project.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;
 <br><b>Best Practices</b>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;Avoid using Select * (query only the columns you need)
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;LIMIT does NOT affect cost
